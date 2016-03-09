@@ -68,13 +68,14 @@ def samplecode(npm_server,username,password):
 		NetObject="N:" + str(obj["NodeID"]), NetObjectType="N", NetObjectID=obj["NodeID"])
 	print pollerUri
 
+	#pausePriorDelete = raw_input("Pausing prior to Delete ") #delete after test
 	print "Deleting Custom Property...."
 	swis.delete(pollerUri)
 
-def getLoginInfo():
-        f = open('../creds/credsfile', 'r')
+def getLoginInfo(credsFile):
+        f = open(credsFile, 'r')
 	password = f.read()
-        print "[-] pass: ", password.strip()
+        #debug: print "[-] pass: ", password.strip()
         f.close()
         return password.strip()
 
@@ -82,9 +83,10 @@ def main():
 	#npm_server = raw_input("IP address of NPM Server: ")
 	npm_server = "solarwinds.prod.xome.com"
 	#username = raw_input("Username: ")
-	username = "PROD\mark"
+	#username = "PROD\yourusername"
+	username = getLoginInfo('../creds/userfile')
 	#password = getpass("Password: ")
-	password = getLoginInfo()
+	password = getLoginInfo('../creds/credsfile')
 
 	samplecode(npm_server,username,password)
 
