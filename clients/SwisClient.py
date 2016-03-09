@@ -5,6 +5,8 @@ import requests
 import json
 from getpass import getpass
 
+###urllib3.disable_warnings()
+
 """
 Make sure to set a valid nodeID in line 50 before using!
 """
@@ -47,9 +49,15 @@ def samplecode(npm_server,username,password):
 	print aliases
 
 	print "Query Test:"
-	results = swis.query("SELECT Uri FROM Orion.Nodes WHERE NodeID=@id", id=245) # set valid NodeID!
+	results = swis.query("SELECT Uri FROM Orion.Nodes WHERE NodeID=@id", id=141) # set valid NodeID!
 	uri = results['results'][0]['Uri']
 	print uri
+
+	print "[+] Query Test II:"
+	#results = swis.query("SELECT NodeID FROM Orion.Nodes WHERE NodeID=@id", id=141) # set valid NodeID!
+        results = swis.query("SELECT NodeID, ObjectSubType, IPAddress, IPAddressType, DynamicIP, Caption, NodeDescription, Description, DNS, SysName, Vendor, SysObjectID, Location, Contact, VendorIcon, Icon, IOSImage, IOSVersion, GroupStatus, StatusIcon, LastSync, LastSystemUpTimePollUtc, MachineType, Severity, ChildStatus, Allow64BitCounters, AgentPort, TotalMemory, CMTS, CustomPollerLastStatisticsPoll, CustomPollerLastStatisticsPollSuccess, SNMPVersion, PollInterval, EngineID, RediscoveryInterval, NextPoll, NextRediscovery, StatCollection, External, Community, RWCommunity, IP, IP_Address, IPAddressGUID, NodeName, BlockUntil, BufferNoMemThisHour, BufferNoMemToday, BufferSmMissThisHour, BufferSmMissToday, BufferMdMissThisHour, BufferMdMissToday, BufferBgMissThisHour, BufferBgMissToday, BufferLgMissThisHour, BufferLgMissToday, BufferHgMissThisHour, BufferHgMissToday, OrionIdPrefix, OrionIdColumn FROM Orion.Nodes WHERE NodeID=@id", id=141)
+	myNodeID = results['results'][0]['IPAddress']
+	print myNodeID
 
 	print "Custom Property Update Test:"
 	swis.update(uri + "/CustomProperties", city="Austin")
@@ -63,12 +71,23 @@ def samplecode(npm_server,username,password):
 	print "Deleting Custom Property...."
 	swis.delete(pollerUri)
 
+def getLoginInfo():
+        f = open('../creds/credsfile', 'r')
+	password = f.read()
+        print "[-] pass: ", password.strip()
+        f.close()
+        return password.strip()
+
 def main():
-	npm_server = raw_input("IP address of NPM Server: ")
-	username = raw_input("Username: ")
-	password = getpass("Password: ")
+	#npm_server = raw_input("IP address of NPM Server: ")
+	npm_server = "solarwinds.prod.xome.com"
+	#username = raw_input("Username: ")
+	username = "PROD\mark"
+	#password = getpass("Password: ")
+	password = getLoginInfo()
 
 	samplecode(npm_server,username,password)
+
 
 
 if __name__ == "__main__":
