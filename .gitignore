@@ -1,2 +1,5 @@
 creds/credsfile
 creds/userfile
+
+# compiled python
+*.pyc
