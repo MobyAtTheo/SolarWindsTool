@@ -9,6 +9,9 @@ from getpass import getpass
 
 """
 Make sure to set a valid nodeID in line 50 before using!
+
+Using: http://solarwinds.prod.xome.com/Orion/NetPerfMon/NodeDetails.aspx?NetObject=N:141
+BLV-SW-IDF1
 """
 
 class SwisClient:
@@ -61,6 +64,13 @@ def samplecode(npm_server,username,password):
 
 	print "Custom Property Update Test:"
 	swis.update(uri + "/CustomProperties", city="Austin")
+	swis.update(uri + "/CustomProperties", comments="O. Henry lived here")
+	obj = swis.read(uri + "/CustomProperties")
+	print obj
+
+	print "Custom Property Update Test II:"
+	swis.update(uri + "/CustomProperties", lastupdatedcustompropertydate="20160309") #Added a date to a custom field
+	swis.update(uri + "/CustomProperties", lastupdatedcustompropertydate="")  #"delete" a custom property value
 	obj = swis.read(uri + "/CustomProperties")
 	print obj
 
