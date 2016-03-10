@@ -1,12 +1,14 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 import base64
 import getpass
 
 
 class genBase64Pass(object):
+    """Generate an encoded password for use in stored files.
     """
-    """
+
+    """Future: use encrypt / decrypt or keys model"""
 
     """
         >>> base64.b64encode("test".encode('ascii'))
@@ -17,44 +19,64 @@ class genBase64Pass(object):
 
     def __init__(self):
         #self.myPassword
-        pass
+        self.myUserName="username123"
+        self.myPassWord="password123"
+        #pass
  
-    def encodePW(self):
-        print("encodePW")
+    def getDataPW(self):
+        #print("encodePW")
+        """future: extend to get username and write the files for the creds"""
         myPassword = ""
 
-        myUserName=input("Username: ")
-        myPassWord=getpass.getpass("Password: ")
+        #self.myUserName=raw_input("Username: ")
+        self.myPassWord=getpass.getpass("Password: ")
 
-        myPassWord.strip()
-        print(myPassWord)
-        b64PassWord=base64.b64encode(myPassWord.encode('ascii'))
-        print(b64PassWord)
+        self.myPassWord.strip()
+        self.myUserName.strip()
 
-        return str(b64PassWord)
+        return self.myPassWord
+
+    def encodePW(self,myPassWord):
+        b64PassWord=base64.b64encode(myPassWord)
+
+        return b64PassWord
 
     def decodePW(self,b64Password):
-        print(b64Password)
-        decodedPW=base64.b64decode(b64Password.encode('ascii'))
-        print(decodedPW)
+        #decodedPW=base64.b64decode(b64Password.encode('ascii'))
+        decodedPW=base64.b64decode(b64Password)
 
         return str(decodedPW)
 
-    def outputPW(self,outputPW,outputUser):
-        print("Password: ")
-        print(outputPW)
-        print("User:")
-        print(outputUser)
+    def outputPW(self,outputPW,outputUser,encodedPW):
+        """ May be needed in python3 to strip leading characters from
+            base64 module off of unicode ouput string
+        """
+        print "*********************"
+        print "[+] User:"
+        print outputUser.strip()
+        print "[+] Encoded Password: "
+        print encodedPW
 
 if __name__ == '__main__':
-    print("main")
+    #print("main")
     genPass=genBase64Pass()
-    myPassword=genBase64Pass.encodePW("test")
-    print("mypasshere: ",myPassword)
-    genBase64Pass.outputPW("blah",myPassword,"defaultuser")
-    
-    myDecodedPW=genBase64Pass.decodePW("blah",myPassword)
-    genBase64Pass.outputPW("blah",myDecodedPW,"defaultuser")
+    plaintextPW=genPass.getDataPW()
+
+    """uncomment next 2 lines if you'd like to see the password you entered for code sanity check"""
+    ### print"[+] Password to be encoded: "
+    ### print plaintextPW
+
+    myPassword=genPass.encodePW(plaintextPW)
+    print "[+] Encoded Password: "
+    print myPassword
+
+    myDecodedPW=genPass.decodePW(myPassword)
+    """uncomment next 2 lines if you'd like to see your password decoded for code sanity check"""
+    ### print "[+] Decoded Password: "
+    ### print myDecodedPW
+
+    """Activate after enabling user password for debugging"""
+    #genPass.outputPW(myDecodedPW,"defaultuser",myPassword)
 
 
 
