@@ -6,6 +6,11 @@ import getpass
 
 class genBase64Pass(object):
     """Generate an encoded password for use in stored files.
+
+       Usage: passworgen.py
+
+       Class usage: import passwordgen
+                    see help below
     """
 
     """Future: use encrypt / decrypt or keys model"""
@@ -25,6 +30,7 @@ class genBase64Pass(object):
  
     def getDataPW(self):
         #print("encodePW")
+        """Collect password for encoding"""
         """future: extend to get username and write the files for the creds"""
         myPassword = ""
 
@@ -37,11 +43,15 @@ class genBase64Pass(object):
         return self.myPassWord
 
     def encodePW(self,myPassWord):
+        """encode the password and return the encoded password string"""
         b64PassWord=base64.b64encode(myPassWord)
 
         return b64PassWord
 
     def decodePW(self,b64Password):
+        """decode the password and return the encoded password string
+           for adding to a password file.
+        """
         #decodedPW=base64.b64decode(b64Password.encode('ascii'))
         decodedPW=base64.b64decode(b64Password)
 
