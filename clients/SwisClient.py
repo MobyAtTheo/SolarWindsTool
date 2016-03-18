@@ -6,11 +6,11 @@ import json
 from getpass import getpass
 import base64
 
-
-#import sys  
+import codecs
+import sys  
 
 #reload(sys)  
-#sys.setdefaultencoding('ascii')
+#sys.setdefaultencoding('utf-8')
 #print "[+] default_encoding: ", sys.getdefaultencoding()
 
 ###urllib3.disable_warnings()
@@ -52,7 +52,7 @@ class SwisClient:
 			auth=self.credentials, 
 			headers={'Content-Type': 'application/json'})
 
-def samplecode(npm_server,username,password):
+def runClient(npm_server,username,password):
 	swis = SwisClient(npm_server,username,password)
 	
 	print "Invoke Test:"
@@ -90,26 +90,59 @@ def samplecode(npm_server,username,password):
 	print "Deleting Custom Property...."
 	swis.delete(pollerUri)
 
-def getLoginInfo(credsFile):
-        f = open(credsFile, 'r')
+def getLoginInfo(credsFile,enc):
+        """Get login and creds info from a file
+           
+           credsfile = name of file
+
+           enc = 0 = plaintext, 1 = encoded
+
+           use the password encode utility to create an encoded password
+
+	   serverfile = servername or IP address
+	   userfile = username (username or DOMAIN\username are acceptable)
+	   credsfile = password file
+        """
+        password="test"
+        f = codecs.open(credsFile, 'r', encoding='ascii')
 	password = f.read()
-        #debug: print "[-] pass: ", password.strip()
         f.close()
-        decodedPW=base64.b64decode(password)
-        #return password.strip()
-        print str(decodedPW.strip())
-        return str(decodedPW.strip())
+        if enc == 0:
+            #f = codecs.open(credsFile, 'r', encoding='ascii')
+            print "[=]", str(password.strip()),"A"
+            return password.strip()
+        else:
+            #print "[+] Assuming encoded"
+            decodedPW=base64.b64decode(password).encode('ascii')
+            print "[+]", str(decodedPW.strip()),"A"
+            return decodedPW.strip() 
+        return "busted"
+
+def debugCredsFile(activate,npm_server,username,password):
+        """Provide credsfile output information
+
+        """
+        if activate == 1:
+	    #npm_server = raw_input("IP address of NPM Server: ")
+	    #npm_server = "solarwinds.prod.xome.com"
+            print "[+] returned npm_server", npm_server,"A"
+	    #username = raw_input("Username: ")
+	    #username = "PROD\yourusername"
+            print "[+] returned username", username
+	    #password = getpass("Password: ")
+            print "[+] returned password", password
+        else:
+            pass
+            return 0
 
 def main():
-	#npm_server = raw_input("IP address of NPM Server: ")
-	npm_server = "solarwinds.prod.xome.com"
-	#username = raw_input("Username: ")
-	#username = "PROD\yourusername"
-	username = getLoginInfo('../creds/userfile')
-	#password = getpass("Password: ")
-	password = getLoginInfo('../creds/credsfile')
+	npm_server  = getLoginInfo('../creds/serverfile',0)
+	username = getLoginInfo('../creds/userfile',0)
+	password = getLoginInfo('../creds/credsfile',1)
 
-	samplecode(npm_server,username,password)
+        debugCredsFile(0,npm_server,npm_server,password)
+
+	runClient(npm_server,username,password)
 
 
 
