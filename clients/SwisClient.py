@@ -1,19 +1,24 @@
 #!/usr/bin/python2.7
 
-
 import requests
 import json
 from getpass import getpass
 import base64
 
 import codecs
-import sys  
 
+#Check for encoding:
+#import sys  
 #reload(sys)  
 #sys.setdefaultencoding('utf-8')
 #print "[+] default_encoding: ", sys.getdefaultencoding()
 
-###urllib3.disable_warnings()
+### Disable warnings
+### urllib3.disable_warnings()
+###/usr/lib/python2.7/dist-packages/urllib3/connectionpool.py:787: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.org/en/latest/security.html InsecureRequestWarning)
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
 
 """
 Make sure to set a valid nodeID in line 50 before using!
@@ -108,29 +113,28 @@ def getLoginInfo(credsFile,enc):
 	password = f.read()
         f.close()
         if enc == 0:
-            #f = codecs.open(credsFile, 'r', encoding='ascii')
-            print "[=]", str(password.strip()),"A"
             return password.strip()
         else:
-            #print "[+] Assuming encoded"
             decodedPW=base64.b64decode(password).encode('ascii')
-            print "[+]", str(decodedPW.strip()),"A"
             return decodedPW.strip() 
         return "busted"
 
 def debugCredsFile(activate,npm_server,username,password):
         """Provide credsfile output information
 
+           activate = 0 = silent (no debug output)
+           activate = 1 = print to screen 
+
         """
         if activate == 1:
 	    #npm_server = raw_input("IP address of NPM Server: ")
 	    #npm_server = "solarwinds.prod.xome.com"
-            print "[+] returned npm_server", npm_server,"A"
+            print "[d] returned npm_server", npm_server,"A"
 	    #username = raw_input("Username: ")
 	    #username = "PROD\yourusername"
-            print "[+] returned username", username
+            print "[d] returned username", username
 	    #password = getpass("Password: ")
-            print "[+] returned password", password
+            print "[d] returned password", password
         else:
             pass
             return 0
