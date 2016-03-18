@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Servers>
+	<Putty>
+		<Node Type="0" Expanded="1">
+			<DisplayName>route_servers</DisplayName>
+			<Node Type="1">
+				<SavedSession>00_yellow_default</SavedSession>
+				<DisplayName>route-server.cerf.net-borked-allActive</DisplayName>
+				<ServerName>route-server.cerf.net</ServerName>
+				<PuttyConType>2</PuttyConType>
+				<Port>23</Port>
+				<UserName></UserName>
+				<Password>nmtUxDS6qY0=</Password>
+				<PasswordDelay>0</PasswordDelay>
+				<CLParams>-load 00_yellow_default route-server.cerf.net -telnet -P 23</CLParams>
+				<ScriptDelay>0</ScriptDelay>
+			</Node>
+			<Node Type="1">
+				<SavedSession>00_yellow_default</SavedSession>
+				<DisplayName>route-server.he.net</DisplayName>
+				<ServerName>route-server.he.net</ServerName>
+				<PuttyConType>2</PuttyConType>
+				<Port>23</Port>
+				<UserName></UserName>
+				<Password>quOvrNHqQaw=</Password>
+				<PasswordDelay>0</PasswordDelay>
+				<CLParams>-load 00_yellow_default route-server.he.net -telnet -P 23</CLParams>
+				<ScriptDelay>0</ScriptDelay>
+			</Node>
+			<Node Type="1">
+				<SavedSession>00_green_default</SavedSession>
+				<DisplayName>10.20.30.40-a_host</DisplayName>
+				<ServerName>10.20.30.40</ServerName>
+				<PuttyConType>2</PuttyConType>
+				<Port>23</Port>
+				<UserName></UserName>
+				<Password>quOvrNHqQaw=</Password>
+				<PasswordDelay>0</PasswordDelay>
+				<CLParams>-load 00_yellow_default route-server.he.net -telnet -P 23</CLParams>
+				<ScriptDelay>0</ScriptDelay>
+			</Node>
+		</Node>
+	</Putty>
+</Servers>
