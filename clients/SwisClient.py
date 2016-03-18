@@ -4,6 +4,14 @@
 import requests
 import json
 from getpass import getpass
+import base64
+
+
+#import sys  
+
+#reload(sys)  
+#sys.setdefaultencoding('ascii')
+#print "[+] default_encoding: ", sys.getdefaultencoding()
 
 ###urllib3.disable_warnings()
 
@@ -87,7 +95,10 @@ def getLoginInfo(credsFile):
 	password = f.read()
         #debug: print "[-] pass: ", password.strip()
         f.close()
-        return password.strip()
+        decodedPW=base64.b64decode(password)
+        #return password.strip()
+        print str(decodedPW.strip())
+        return str(decodedPW.strip())
 
 def main():
 	#npm_server = raw_input("IP address of NPM Server: ")
