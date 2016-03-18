@@ -1,6 +1,11 @@
 Put your credsfile here (named credsfile) for password.
 
-Eventually we'll have a username file here named userfile.
+userfile username file (formats are username or DOMAIN\username)
+credsfile password file (format password)
+serverfile hosname for npm_server (format host.name.org)
+
+Use ../tools/passwordgen.py to generate an encoded password
 
 Please use creds and userfile for testing purposes only.
 Please do not store your credsfile and/or userfile in the repository for all to use.
+
